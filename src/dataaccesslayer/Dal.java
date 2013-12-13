@@ -70,7 +70,7 @@ public class Dal {
 		int rsetCourse = stmtCourse.executeUpdate();
 		return rsetCourse;
 	}
-
+		//så funkar det :DA:D:A:D
 	
 	}
 
