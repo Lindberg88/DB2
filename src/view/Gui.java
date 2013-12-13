@@ -29,7 +29,7 @@ public class Gui {
 	private JTextField kkodField;
 	private JTextField kadressField;
 	private JTextField poangField;
-	private JTextField textField;
+	private JTextField textField;  //a
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
