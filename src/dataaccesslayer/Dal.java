@@ -1,13 +1,14 @@
+
 package dataaccesslayer;
 
 import java.sql.*;						
 
 public class Dal {
 	
-	public Dal(){																		//konstruktor
+	public Dal(){																								//konstruktor
 		try {
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-				//connection string
+				
 		} 
 		catch (Exception e) {
 			System.out.println("Kan inte hitta database driver class: " + e);
@@ -15,42 +16,32 @@ public class Dal {
 	}
 	
 	private Connection connect() throws SQLException{
-		return DriverManager.getConnection("JDBC:ODBC:Grupp30;database=Grupp30;");
+		return DriverManager.getConnection("JDBC:ODBC:Grupp30;database=Grupp30;");								//connection string
 	}
 			
-	public ResultSet getAllStudents() throws SQLException{
-		Statement stmtStudent = connect().createStatement();					//metod för att hämta allt från Student
-		String sqlStudent = "select * from student";					//SQL-kod
+	//Studentmetoder
+	public ResultSet getStudentOnCourse(String spnr) throws SQLException{												//Hämtar 1 student från databasen
+		PreparedStatement stmtStudentOnCourse = connect().prepareStatement("select * from laser where spnr = ?");
+		stmtStudentOnCourse.setString(1, spnr);
+		ResultSet rsetStudentCourse = stmtStudentOnCourse.executeQuery();
+		return rsetStudentCourse;
+		}
+
+	public ResultSet getAllStudents() throws SQLException{														//Hämtar alla studenter (till listan) 
+		Statement stmtStudent = connect().createStatement();													
+		String sqlStudent = "select * from student";															
 		ResultSet rsetStudent = stmtStudent.executeQuery(sqlStudent);
-		
 		return rsetStudent;
 	}
 	
-	public ResultSet getStudent(String spnr) throws SQLException{				//metod för att hämta allt från Student (som vi sedan kastar in i GUI)
+	public ResultSet getStudent(String spnr) throws SQLException{												//Hämtar 1 student från databasen
 		PreparedStatement stmtStudent = connect().prepareStatement("select * from student where spnr = ?");
 		stmtStudent.setString(1, spnr);
 		ResultSet rsetStudent = stmtStudent.executeQuery();
-		
 		return rsetStudent;
 		}
-	
-	
-	public ResultSet getAllCourses() throws SQLException{
-		Statement stmtCourse = connect().createStatement();					//metod för att hämta allt från Student
-		String sqlCourse = "select * from kurs";					//SQL-kod
-		ResultSet rsetCourse = stmtCourse.executeQuery(sqlCourse);
-		
-		return rsetCourse;
-	}
 
-	public ResultSet getCourse(String kkod) throws SQLException{				//metod för att hämta allt från Student (som vi sedan kastar in i GUI)
-		PreparedStatement stmtCourse = connect().prepareStatement("select * from kurs where kkod = ?");
-		stmtCourse.setString(1, kkod);
-		ResultSet rsetCourse = stmtCourse.executeQuery();
-		return rsetCourse;
-		}
-
-	public int addStudent(String spnr,String sname,String sadress,String stel) throws SQLException {
+	public int addStudent(String spnr,String sname,String sadress,String stel) throws SQLException {			//Lägg till student
 		PreparedStatement stmtStudent = connect().prepareStatement("insert into Student values(?,?,?,?)");
 		stmtStudent.setString(1, spnr);
 		stmtStudent.setString(2, sname);
@@ -58,11 +49,46 @@ public class Dal {
 		stmtStudent.setString(4, stel);
 		int rsetStudent = stmtStudent.executeUpdate();
 		return rsetStudent;
-		
+	}
+	
+	public int deleteStudent(String spnr, String sname, String sadress,String stel) throws SQLException {
+		PreparedStatement stmtStudent = connect().prepareStatement("delete from student where spnr =? and sname = ? and sadress = ? and stel = ?");
+		stmtStudent.setString(1, spnr);
+		stmtStudent.setString(2, sname);
+		stmtStudent.setString(3, sadress);
+		stmtStudent.setString(4, stel);
+		int rsetStudent = stmtStudent.executeUpdate();
+		return rsetStudent;
 	}
 
-	public int addCourse(String kkod, String kname, String kadress, String poang) throws SQLException {
-		PreparedStatement stmtCourse = connect().prepareStatement("insert into Kurs values(?,?,?,?)");
+	public int updateStudent(String spnr, String sname, String sadress,String stel) throws SQLException {
+		PreparedStatement stmtStudent = connect().prepareStatement("UPDATE Student SET sname = ?, sadress = ?, stel = ? where spnr = ?");
+		stmtStudent.setString(1, sname);
+		stmtStudent.setString(2, sadress);
+		stmtStudent.setString(3, stel);
+		stmtStudent.setString(4, spnr);
+		int rsetStudent = stmtStudent.executeUpdate();
+		return rsetStudent;
+	}
+	
+	//Kursmetoder
+	public ResultSet getAllCourses() throws SQLException{														//Hämtar alla kurser (till listan)
+		Statement stmtCourse = connect().createStatement();														
+		String sqlCourse = "select * from kurs";					
+		ResultSet rsetCourse = stmtCourse.executeQuery(sqlCourse);
+		
+		return rsetCourse;
+	}
+
+	public ResultSet getCourse(String kkod) throws SQLException{												//Hämtar 1 kurs från databasen
+		PreparedStatement stmtCourse = connect().prepareStatement("select * from kurs where kkod = ?");
+		stmtCourse.setString(1, kkod);
+		ResultSet rsetCourse = stmtCourse.executeQuery();
+		return rsetCourse;
+		}
+
+	public int addCourse(String kkod, String kname, String kadress, String poang) throws SQLException {			//Lägg till kurs
+		PreparedStatement stmtCourse = connect().prepareStatement("insert into kurs values(?,?,?,?)");
 		stmtCourse.setString(1, kkod);
 		stmtCourse.setString(2, kname);
 		stmtCourse.setString(3, kadress);
@@ -70,6 +96,34 @@ public class Dal {
 		int rsetCourse = stmtCourse.executeUpdate();
 		return rsetCourse;
 	}
-	
+
+	public int deleteCourse(String kkod, String kname, String kadress,String poang) throws SQLException {
+		PreparedStatement stmtCourse = connect().prepareStatement("delete from kurs where kkod =? and kname = ? and kadress = ? and poang = ?");
+		stmtCourse.setString(1, kkod);
+		stmtCourse.setString(2, kname);
+		stmtCourse.setString(3, kadress);
+		stmtCourse.setString(4, poang);
+		int rsetCourse = stmtCourse.executeUpdate();
+		return rsetCourse;
 	}
+
+	public int updateCourse(String kkod, String kname, String kadress,String poang) throws SQLException {
+		PreparedStatement stmtCourse = connect().prepareStatement("UPDATE Kurs SET kname = ?, kadress = ?, poang = ? where kkod = ?");
+		stmtCourse.setString(1, kname);
+		stmtCourse.setString(2, kadress);
+		stmtCourse.setString(3, poang);
+		stmtCourse.setString(4, kkod);
+		int rsetCourse = stmtCourse.executeUpdate();
+		return rsetCourse;
+	}
+
+	//Registrering
+	public int addStudentToCourse(String spnr, String kkod) throws SQLException { 
+		PreparedStatement stmtStudentCourse = connect().prepareStatement("insert into laser values(?,?)");
+		stmtStudentCourse.setString(1, spnr);
+		stmtStudentCourse.setString(2, kkod);
+		int rsetStudentCourse = stmtStudentCourse.executeUpdate();
+		return rsetStudentCourse;
+	}
+}
 
