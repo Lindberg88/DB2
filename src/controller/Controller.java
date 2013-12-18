@@ -54,6 +54,13 @@ public class Controller {
 		return dal.updateCourse(kkod, kname, kadress, poang);
 	}
 
+	public ResultSet getCourseStudents(String kkod) throws SQLException {
+		return dal.getCourseStudents(kkod);
+	}
+	
+	
+
+	
 	
 	//Registrering
 	
@@ -61,5 +68,7 @@ public class Controller {
 		return dal.addStudentToCourse(spnr, kkod);
 	}
 
-	
+	public int gradeStudent(String spnr, String kkod, String betyg) throws SQLException{
+		return dal.gradeStudent(spnr, kkod, betyg);
+	}	
 }

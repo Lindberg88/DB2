@@ -117,13 +117,30 @@ public class Dal {
 		return rsetCourse;
 	}
 
+	public ResultSet getCourseStudents(String kkod) throws SQLException{												//Hämtar 1 student från databasen
+		PreparedStatement stmtCourseStudents = connect().prepareStatement("select * from laser where kkod = ?");
+		stmtCourseStudents.setString(1, kkod);
+		ResultSet rsetCourseStudents = stmtCourseStudents.executeQuery();
+		return rsetCourseStudents;
+		}
+	
+	
 	//Registrering
-	public int addStudentToCourse(String spnr, String kkod) throws SQLException { 
+	public int addStudentToCourse(String spnr, String kkod) throws SQLException {  
 		PreparedStatement stmtStudentCourse = connect().prepareStatement("insert into laser values(?,?)");
 		stmtStudentCourse.setString(1, spnr);
 		stmtStudentCourse.setString(2, kkod);
 		int rsetStudentCourse = stmtStudentCourse.executeUpdate();
 		return rsetStudentCourse;
+	}
+	
+	public int gradeStudent(String spnr, String kkod, String betyg) throws SQLException{
+		PreparedStatement stmtGradeStudent = connect().prepareStatement("insert into harLastKurs values (?, ?, ?)");
+		stmtGradeStudent.setString(1, spnr);
+		stmtGradeStudent.setString(2, kkod);
+		stmtGradeStudent.setString(3, betyg);
+		int rsetGradeStudent = stmtGradeStudent.executeUpdate();
+		return rsetGradeStudent;
 	}
 }
 
