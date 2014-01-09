@@ -71,6 +71,14 @@ public class Dal {
 		return rsetStudent;
 	}
 	
+	public ResultSet getFinishedCourses(String spnr) throws SQLException {
+		PreparedStatement stmtFinished = connect().prepareStatement("select * from harLastKurs where spnr = ?");
+		stmtFinished.setString(1, spnr);
+		ResultSet rsetFinished = stmtFinished.executeQuery();
+		return rsetFinished;
+	}
+	
+	
 	//Kursmetoder
 	public ResultSet getAllCourses() throws SQLException{														//Hämtar alla kurser (till listan)
 		Statement stmtCourse = connect().createStatement();														
@@ -124,6 +132,13 @@ public class Dal {
 		return rsetCourseStudents;
 		}
 	
+	public ResultSet getFinishedStudents(String kkod) throws SQLException {
+		PreparedStatement stmtFinished = connect().prepareStatement("select * from harLastKurs where kkod = ?");
+		stmtFinished.setString(1, kkod);
+		ResultSet rsetFinished = stmtFinished.executeQuery();
+		return rsetFinished;
+	}
+	
 	
 	//Registrering
 	public int addStudentToCourse(String spnr, String kkod) throws SQLException {  
@@ -142,5 +157,14 @@ public class Dal {
 		int rsetGradeStudent = stmtGradeStudent.executeUpdate();
 		return rsetGradeStudent;
 	}
+	
+	public int removeStudentFromCourse(String spnr, String kkod) throws SQLException{ 
+		PreparedStatement stmtRemoveStudent = connect().prepareStatement("delete from laser where spnr = ? and kkod =  ?");
+		stmtRemoveStudent.setString(1, spnr);
+		stmtRemoveStudent.setString(2, kkod);
+		int rsetRemoveStudent = stmtRemoveStudent.executeUpdate();
+		return rsetRemoveStudent;
+	}
+
 }
 

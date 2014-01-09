@@ -40,10 +40,13 @@ public class Gui {
 	DefaultListModel<String> ladokListModelCourse = new DefaultListModel<String>();									//ladok lista med kurser som student läser
 	JList<String> ladokCourseList = new JList<String>(ladokListModelCourse);
 	
-	
-	
-	
+	DefaultListModel<String> finishedListModel = new DefaultListModel<String>();
+	JList<String> finishedCourses = new JList<String>(finishedListModel);
 
+	DefaultListModel<String> finishedListModelCourses = new DefaultListModel<String>();
+	JList<String> list_3 = new JList<String>(finishedListModelCourses);
+	
+	
 	private JFrame frame;
 	private JTextField snameField;
 	private JTextField spnrField;
@@ -60,9 +63,6 @@ public class Gui {
 	private JTextField poangRegField;
 	private JTextField knameRegField;
 	private JTextField kkodRegField;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_8;
 
 	public static void main(String[] args) { 								// Start the application
 		EventQueue.invokeLater(new Runnable() {
@@ -210,37 +210,22 @@ public class Gui {
 		JPanel panel_10 = new JPanel();
 		panel_10.setLayout(null);
 		panel_10.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Avslutade kurser", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_10.setBounds(10, 498, 291, 94);
+		panel_10.setBounds(10, 498, 410, 94);
 		panel_3.add(panel_10);
 		
 		JScrollPane scrollPane_2 = new JScrollPane();
 		scrollPane_2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane_2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane_2.setBounds(6, 16, 275, 67);
+		scrollPane_2.setBounds(6, 16, 394, 67);
 		panel_10.add(scrollPane_2);
+		finishedCourses.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				showGradePoints();
+			}
+		});
 		
-		JList list_1 = new JList();
-		scrollPane_2.setViewportView(list_1);
 		
-		JLabel label_3 = new JLabel("H\u00F6gskolepo\u00E4ng");
-		label_3.setBounds(314, 498, 113, 14);
-		panel_3.add(label_3);
-		
-		textField_5 = new JTextField();
-		textField_5.setEditable(false);
-		textField_5.setColumns(10);
-		textField_5.setBounds(314, 517, 113, 20);
-		panel_3.add(textField_5);
-		
-		textField_6 = new JTextField();
-		textField_6.setEditable(false);
-		textField_6.setColumns(10);
-		textField_6.setBounds(314, 572, 113, 20);
-		panel_3.add(textField_6);
-		
-		JLabel lblBetyg = new JLabel("Betyg");
-		lblBetyg.setBounds(314, 558, 113, 14);
-		panel_3.add(lblBetyg);
+		scrollPane_2.setViewportView(finishedCourses);
 		
 		JButton btnSpara = new JButton("Spara");
 		btnSpara.setBounds(232, 195, 89, 23);
@@ -369,28 +354,18 @@ public class Gui {
 		
 		JPanel panel_12 = new JPanel();
 		panel_12.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Studenter som har l\u00E4st kursen", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_12.setBounds(10, 496, 306, 105);
+		panel_12.setBounds(10, 496, 410, 105);
 		panel_1.add(panel_12);
 		panel_12.setLayout(null);
 		
 		JScrollPane scrollPane_5 = new JScrollPane();
 		scrollPane_5.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane_5.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane_5.setBounds(6, 16, 294, 82);
+		scrollPane_5.setBounds(6, 16, 394, 82);
 		panel_12.add(scrollPane_5);
 		
-		JList list_3 = new JList();
+		
 		scrollPane_5.setViewportView(list_3);
-		
-		JLabel lblSlutbetyg = new JLabel("Slutbetyg");
-		lblSlutbetyg.setBounds(331, 496, 91, 14);
-		panel_1.add(lblSlutbetyg);
-		
-		textField_8 = new JTextField();
-		textField_8.setEditable(false);
-		textField_8.setBounds(331, 521, 96, 20);
-		panel_1.add(textField_8);
-		textField_8.setColumns(10);
 
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Registrering", null, panel_2, null);
@@ -410,11 +385,13 @@ public class Gui {
 		panel_2.add(lblPersonnummer_1);
 
 		spnrRegField = new JTextField();
+		spnrRegField.setEditable(false);
 		spnrRegField.setBounds(219, 61, 208, 20);
 		panel_2.add(spnrRegField);
 		spnrRegField.setColumns(10);
 
 		snameRegField = new JTextField();
+		snameRegField.setEditable(false);
 		snameRegField.setBounds(219, 36, 208, 20);
 		snameRegField.setColumns(10);
 		panel_2.add(snameRegField);
@@ -424,6 +401,7 @@ public class Gui {
 		panel_2.add(lblHgskolepong_1);
 
 		poangRegField = new JTextField();
+		poangRegField.setEditable(false);
 		poangRegField.setBounds(219, 173, 87, 20);
 		panel_2.add(poangRegField);
 		poangRegField.setColumns(10);
@@ -437,11 +415,13 @@ public class Gui {
 		panel_2.add(label_1);
 
 		knameRegField = new JTextField();
+		knameRegField.setEditable(false);
 		knameRegField.setBounds(219, 118, 208, 20);
 		knameRegField.setColumns(10);
 		panel_2.add(knameRegField);
 
 		kkodRegField = new JTextField();
+		kkodRegField.setEditable(false);
 		kkodRegField.setBounds(219, 143, 208, 20);
 		kkodRegField.setColumns(10);
 		panel_2.add(kkodRegField);
@@ -507,7 +487,7 @@ public class Gui {
 		scrollPane_9.setBounds(6, 16, 97, 58);
 		panel_13.add(scrollPane_9);
 		
-		JList ladokCourseList = new JList(ladokListModelCourse);
+		final JList ladokCourseList = new JList(ladokListModelCourse);
 		scrollPane_9.setViewportView(ladokCourseList);
 		ladokCourseList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
@@ -539,14 +519,7 @@ public class Gui {
 					}
 				});
 		
-		JButton btnNewButton_1 = new JButton("Spara betyg");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				gradeStudent();
-			}
-		});
-		btnNewButton_1.setBounds(316, 327, 111, 23);
-		panel_2.add(btnNewButton_1);
+
 		
 		JLabel lblTackTillAlla = new JLabel("      Tack till alla som hj\u00E4lpt till vid framtagandet av denna programvara!");
 		lblTackTillAlla.setBounds(10, 369, 417, 221);
@@ -640,7 +613,9 @@ public class Gui {
 							kadressField.setText("");
 							poangField.setText("");
 							kkodField.setEditable(true);
+							poangField.setEditable(true);
 						} 
+				
 				}
 		});
 		
@@ -652,6 +627,7 @@ public class Gui {
 				kadressField.setText("");
 				poangField.setText("");
 				kkodField.setEditable(true);
+				poangField.setEditable(true);
 			}
 		});
 		
@@ -671,9 +647,10 @@ public class Gui {
 		registerBtn.setBounds(316, 172, 111, 23);
 		panel_2.add(registerBtn);
 		
+
 		
 		String [] betygLista = {"A", "B", "C", "D", "E", "U"};
-		JComboBox comboBox = new JComboBox(betygLista);
+		final JComboBox comboBox = new JComboBox(betygLista);
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -681,14 +658,40 @@ public class Gui {
 		comboBox.setToolTipText("");
 		comboBox.setBounds(316, 279, 111, 25);
 		panel_2.add(comboBox);
-
 		
+		JButton btnNewButton_1 = new JButton("Spara betyg");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					int a = con.gradeStudent(
+							ladokStudentList.getSelectedValue(),
+							ladokCourseList.getSelectedValue().toString(),
+							comboBox.getSelectedItem().toString());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				JOptionPane.showMessageDialog(null, "Student = avregistrerad från kurs!" + "\n" +  "Betyg: " + comboBox.getSelectedItem().toString());
+				try{
+					int a = con.removeStudentFromCourse(
+							ladokStudentList.getSelectedValue().trim(),
+							((String) ladokCourseList.getSelectedValue()).trim());
+					refresh();
+				}
+				catch (SQLException e){
+					e.printStackTrace();
+				}
+				refresh();
+			}
+		});
+		btnNewButton_1.setBounds(316, 327, 111, 23);
+		panel_2.add(btnNewButton_1);
+
 		//refreshar all input
 		refresh(); 	
 	}
 	
 	
-	private void refresh() {
+	private void refresh() { 
 		//Student
 		studentListModel.removeAllElements();
 		try {
@@ -700,6 +703,7 @@ public class Gui {
 			e.printStackTrace();
 		}
 		
+
 		//Kurs
 		courseListModel.removeAllElements();
 		try {
@@ -745,6 +749,7 @@ public class Gui {
 		}
 		
 	}//refresh slut
+	
 
 	//Studentmetoder
 	private void showStudent() {
@@ -761,6 +766,15 @@ public class Gui {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		finishedListModel.removeAllElements();
+		try{
+			ResultSet a = con.finishedCourses(studentList.getSelectedValue());
+			while (a.next()){
+				finishedListModel.addElement(a.getString(2).trim() + " ----- Betyg: " + a.getString(3).trim());
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
 	}	
 
 	private void showStudentCourses() throws SQLException{
@@ -773,16 +787,16 @@ public class Gui {
 	}
 	
 	private void ladokShowStudentCourses() throws SQLException{
-		ResultSet a = con.getStudentOnCourse(ladokStudentList.getSelectedValue().toString());
-		ladokListModelCourse.removeAllElements();
-		while (a.next()) {
-	        String kkod = a.getString("kkod");
-	        
-	        ladokListModelCourse.addElement(kkod);
-		}
-		
+		if (ladokStudentList.getSelectedValue() != null){
+			ResultSet a = con.getStudentOnCourse(ladokStudentList.getSelectedValue().toString());
+			ladokListModelCourse.removeAllElements();
+			while (a.next()) {
+		        String kkod = a.getString("kkod");
+		        
+		        ladokListModelCourse.addElement(kkod);
+			}
+			}
 	}
-	
 	
 	private void showStudentReg() {
 		try {
@@ -790,8 +804,6 @@ public class Gui {
 			while (a.next()) {
 				spnrRegField.setText(a.getString(1).trim());
 				snameRegField.setText(a.getString(2).trim());
-				spnrRegField.setEditable(false);
-				snameRegField.setEditable(false);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -855,11 +867,15 @@ public class Gui {
 				e.printStackTrace();
 			}			
 		}
-	
+	 
+	private void showGradePoints(){
+		
+	}
 	
 	
 	//Kursmetoder
 	private void showCourse() {
+		if(courseList.getSelectedValue() != null){
 		try {
 			ResultSet a = con.getCourse(courseList.getSelectedValue());
 			while (a.next()) {
@@ -868,11 +884,26 @@ public class Gui {
 				kadressField.setText(a.getString(3).trim());
 				poangField.setText(a.getString(4).trim());
 				kkodField.setEditable(false);
+				poangField.setEditable(false);
 			}
 			showCourseStudents();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		finishedListModelCourses.removeAllElements();
+		try{
+			ResultSet a = con.getFinishedStudents(courseList.getSelectedValue().trim());
+			while (a.next()){
+				finishedListModelCourses.addElement(a.getString(1).trim() + " ----- Betyg: " + a.getString(3).trim());
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		
+		
+		}
+		
 	}
 	
 	private void showCourseStudents() throws SQLException{
@@ -891,9 +922,6 @@ public class Gui {
 				kkodRegField.setText(a.getString(1).trim());
 				knameRegField.setText(a.getString(2).trim());
 				poangRegField.setText(a.getString(4).trim());
-				kkodRegField.setEditable(false);
-				knameRegField.setEditable(false);
-				poangRegField.setEditable(false);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -923,6 +951,7 @@ public class Gui {
 					kadressField.getText().trim(),
 					poangField.getText().trim());
 					kkodField.setEditable(false);
+					poangField.setEditable(false);
 			refresh();
 		}
 		catch (SQLException e) {
@@ -957,10 +986,12 @@ public class Gui {
 				e.printStackTrace();
 			}			
 		}
-
 	
 	//Registrering
-	private void addStudentToCourse(){   
+	private void addStudentToCourse(){       
+//		if(){
+//			con.getErrorMessage();
+//		}else{
 		try{
 			int a = con.addStudentToCourse(
 					spnrRegField.getText().trim(),
@@ -971,28 +1002,11 @@ public class Gui {
 					poangRegField.setText("");
 					spnrRegField.setText("");
 					kkodRegField.setText("");
-					
-					snameRegField.setEditable(true);
-					knameRegField.setEditable(true);
-					poangRegField.setEditable(true);
-					spnrRegField.setEditable(true);
-					kkodRegField.setEditable(true);
-
 			refresh();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
+//	}
 	}
-	
-	
-	private void gradeStudent(){
-		int a = con.gradeStudent(
-				ladokStudentList.getSelectedValue(),
-				ladokCourseList.getSelectedValue(),
-				comboBox.getSelectedItem().toString());
-	}
-	
-	
-	
 }//main

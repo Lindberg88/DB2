@@ -58,8 +58,9 @@ public class Controller {
 		return dal.getCourseStudents(kkod);
 	}
 	
-	
-
+	public ResultSet getFinishedStudents(String kkod) throws SQLException {
+		return dal.getFinishedStudents(kkod);
+	}
 	
 	
 	//Registrering
@@ -67,8 +68,21 @@ public class Controller {
 	public int addStudentToCourse(String spnr, String kkod) throws SQLException{ 
 		return dal.addStudentToCourse(spnr, kkod);
 	}
-
-	public int gradeStudent(String spnr, String kkod, String betyg) throws SQLException{
+ 
+	public int gradeStudent(String spnr, String kkod, String betyg) throws SQLException{ 
 		return dal.gradeStudent(spnr, kkod, betyg);
 	}	
+	 
+	public int removeStudentFromCourse(String spnr, String kkod) throws SQLException{ 
+		return dal.removeStudentFromCourse(spnr, kkod);
+	}
+
+	public ResultSet finishedCourses(String spnr) throws SQLException {
+	return dal.getFinishedCourses(spnr);
+	}
+
+	
+	public ResultSet getFinishedCourses(String spnr) throws SQLException {
+		return dal.getFinishedCourses(spnr);
+	}
 }
